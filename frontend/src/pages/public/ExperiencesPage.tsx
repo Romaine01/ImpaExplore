@@ -1,0 +1,5 @@
+import { useState } from 'react';
+import { useExperiences } from '../../features/packages/api';
+import { State } from '../../components/common/State';
+import { PageHeading, ExperienceCard, EmptyState } from '../../components/common/Discovery';
+export function Experiences(){const query=useExperiences();const [search,setSearch]=useState('');return <><PageHeading title="Make a day of it.">Discover published guide experiences. Check the details, ask questions, and request a booking when you're ready.</PageHeading><label className="directory-search">Search experiences<input type="search" value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search by title"/></label><State query={query}>{items=>{const filtered=items.filter(x=>x.title.toLowerCase().includes(search.toLowerCase()));return <><p role="status">{filtered.length} experiences shown</p>{filtered.length?<div className="discovery-grid">{filtered.map(x=><ExperienceCard key={x._id} item={x}/>)}</div>:<EmptyState title="Experiences are being prepared.">Published packages will appear here. You can still explore destinations and meet local guides.</EmptyState>}</>}}</State></>;}

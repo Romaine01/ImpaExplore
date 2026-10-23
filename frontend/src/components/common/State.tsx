@@ -1,0 +1,3 @@
+import type { ReactNode } from 'react';
+import type { UseQueryResult } from '@tanstack/react-query';
+export function State<T>({query,children}:{query:UseQueryResult<T,Error>;children:(data:T)=>ReactNode}){if(query.isPending)return <div className="loading-state" role="status"><span className="skeleton"/><span className="skeleton short"/><p>Loading the latest information…</p></div>;if(query.isError)return <div className="feedback error" role="alert"><h2>We couldn’t load this information.</h2><p>{query.error.message}</p><button onClick={()=>query.refetch()}>Try again</button></div>;return <>{children(query.data)}</>;}
